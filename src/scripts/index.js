@@ -54,12 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNav();
   app.renderPage();
 
-  // ==== Router transition ====
   window.addEventListener('hashchange', async () => {
     const main = document.getElementById('main-content');
+
     if (document.startViewTransition) {
-      await app.renderPage();
+      // ✅ Terapkan transisi nyata (seperti di modul Dicoding)
+      document.startViewTransition(async () => {
+        main.classList.add('fade-out');
+        await app.renderPage();
+        main.classList.remove('fade-out');
+        main.classList.add('fade-in');
+        setTimeout(() => main.classList.remove('fade-in'), 400);
+      });
     } else {
+      // fallback animasi biasa kalau browser tidak mendukung
       main.classList.add('fade-out');
       setTimeout(async () => {
         await app.renderPage();
@@ -69,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 200);
     }
   });
+
+
 
   window.addEventListener('auth:changed', () => updateNav());
   window.addEventListener('story:added', async () => {

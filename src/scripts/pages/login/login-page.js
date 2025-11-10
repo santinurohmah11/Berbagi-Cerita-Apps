@@ -4,7 +4,7 @@ export default class LoginPage {
   async render() {
     return `
       <section class="login container" aria-labelledby="login-title">
-        <h2 id="login-title">Masuk Akun</h2>
+        <h1 id="login-title">Masuk Akun</h1>
         <form id="loginForm" class="form">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required aria-required="true" placeholder="Masukkan email" />

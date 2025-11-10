@@ -106,16 +106,13 @@ export default class HomePage {
       const data = await response.json();
       this._stories = data.listStory || [];
 
-      for (const story of this._stories) {
-        await Idb.saveStory(story);
-      }
-
-      console.log('✅ Cerita dari API disimpan ke IndexedDB');
+      console.log('✅ Cerita dari API berhasil diambil');
     } catch (err) {
       console.warn('⚠️ Tidak bisa ambil dari API, pakai IndexedDB');
       this._stories = await Idb.getAllStories();
     }
   }
+
 
   _renderList() {
     const container = document.getElementById('list-items');
