@@ -1,0 +1,449 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fef7fa;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%; 
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+header, main, footer {
+  width: 100%;
+  display: block;
+}
+
+main {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+main.show {
+  opacity: 1;
+}
+
+
+.main-header {
+  background-color: #4a90e2;
+  color: white;
+  padding: 1rem 0;
+  min-height: 90px;
+  padding-block: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand-name {
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+/* === Fokus Keyboard === */
+:focus {
+  outline: 3px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* ====== NAVIGATION ====== */
+.navigation-drawer {
+  min-height: 100vh;
+  width: 200px;
+  padding: 20px 10px;
+  background-color: #fff;
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  box-shadow: 0 0 4px 2px #00000033;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+.navigation-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-button {
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 28px;
+  color: #141e16;
+  cursor: pointer;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px 20px;
+}
+
+.nav-list li a {
+  padding: 6px 10px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-list li a:hover {
+  text-decoration: underline;
+}
+
+/* ====== MAIN CONTENT ====== */
+.main-content {
+  padding-block: 20px;
+}
+
+/* ====== PAGE TRANSITION ====== */
+#main-content.fade-out {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+#main-content.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 350ms ease, transform 350ms ease;
+}
+
+/* ====== LAYOUT: LIST + MAP ====== */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ====== LIST PANEL ====== */
+.list-panel {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  max-height: 70vh;
+  overflow: auto;
+  position: relative;
+}
+
+/* ====== STORY ITEM ====== */
+.story-item {
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+.story-item:focus,
+.story-item:hover,
+.story-item.active {
+  background-color: #f0f8ff;
+  outline: none;
+}
+.story-thumb {
+  width: 80px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* ====== MAP PANEL ====== */
+.map-panel {
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+/* ====== FORM ====== */
+.form .form-row {
+  margin-bottom: 12px;
+}
+.form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.form input[type="text"],
+.form textarea,
+.form input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ====== BUTTONS ====== */
+.btn, button {
+  background: #4a90e2;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.btn:hover, button:hover {
+  background-color: #357ac9;
+}
+
+/* ====== HEADER CONTENT (fix tombol numpuk) ====== */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #e9f5ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.header-content p {
+  margin-bottom: 12px;
+}
+
+.header-content .btn-tambah {
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* ====== SKIP LINK ====== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #4a90e2;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+  font-weight: 600;
+}
+.skip-link:focus {
+  position: static;
+  left: auto;
+  top: 10px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 9999;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1000px) {
+  .navigation-drawer {
+    min-height: auto;
+    width: auto;
+    padding: 0;
+    background-color: transparent;
+    flex-direction: row;
+    justify-content: space-between;
+    position: static;
+    box-shadow: none;
+    transform: translateX(0);
+  }
+
+  .nav-list {
+    flex-direction: row;
+  }
+
+  .drawer-button {
+    display: none;
+  }
+}
+
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* jarak antar item biar gak numpuk */
+}
+
+.story-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.story-item:hover {
+  transform: scale(1.02);
+}
+
+.story-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.story-item p {
+  margin: 0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #b3e5fc, #e1f5fe);
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 350px;
+}
+
+.login-box input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.login-box button {
+  width: 100%;
+  background-color: #4fc3f7;
+  border: none;
+  padding: 12px;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #03a9f4;
+}
+
+/* Fix header agar z-index di atas peta */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Drawer aktif */
+.navigation-drawer.open {
+  transform: translateX(0);
+}
+
+/* Login Page Styling (khusus halaman login) */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  background: linear-gradient(to right, #b3e5fc, #e1f5fe);
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+}
+/* === Layout utama === */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f8fa; /* warna background lembut */
+}
+
+/* Konten utama supaya dorong footer ke bawah */
+main, #app, #content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Footer tetap di bawah layar === */
+footer {
+  background-color: #9fd0f7;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #000;
+  margin-top: auto; /* kunci: dorong footer ke bawah */
+  width: 100%;
+}
+
+.story-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.save-local-btn,
+.delete-local-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.save-local-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.delete-local-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+
+
+@media (max-width: 768px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+  .map-panel {
+    order: 2;
+  }
+  .list-panel {
+    order: 1;
+  }
+}
+

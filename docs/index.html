@@ -1,0 +1,17 @@
+<!doctype html><html lang="id"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Berbagi Cerita</title><link rel="icon" href="/images/favicon.png" type="image/png"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/><link rel="manifest" href="manifest.json"/><link rel="icon" href="favicon.png"><script defer="defer" src="app.bundle.js"></script><link href="app.css" rel="stylesheet"></head><body><a href="#main-content" class="skip-link">Langsung ke konten utama</a><header class="main-header"><div class="container header-inner"><button id="drawer-button" class="drawer-button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navigation-drawer">☰</button> <a class="brand-name" href="#/"><span>Berbagi Cerita</span></a><nav id="navigation-drawer" class="navigation-drawer" aria-label="Navigasi utama"><ul class="nav-list"><li><a href="#/" aria-current="page">Beranda</a></li><li><a href="#/add-story">Tambah Cerita</a></li><li><a href="#/about">Tentang</a></li><li><a href="#/login">Login</a></li></ul></nav></div></header><main id="main-content" class="main-content container" tabindex="-1"></main><footer class="footer"><p>© 2025 Berbagi Cerita — Santi Nurohmah</p></footer><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script><script src="app.bundle.js"></script><script>const drawerButton = document.querySelector("#drawer-button");
+      const navigationDrawer = document.querySelector("#navigation-drawer");
+
+      drawerButton.addEventListener("click", () => {
+        const isOpen = navigationDrawer.classList.toggle("open");
+        drawerButton.setAttribute("aria-expanded", isOpen);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (
+          !navigationDrawer.contains(event.target) &&
+          !drawerButton.contains(event.target)
+        ) {
+          navigationDrawer.classList.remove("open");
+          drawerButton.setAttribute("aria-expanded", false);
+        }
+      });</script></body></html>
