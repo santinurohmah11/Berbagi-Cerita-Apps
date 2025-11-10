@@ -1,0 +1,21 @@
+{
+  "name": "Berbagi Cerita",
+  "short_name": "Cerita",
+  "description": "Aplikasi Berbagi Cerita oleh Santi Nurohmah",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
