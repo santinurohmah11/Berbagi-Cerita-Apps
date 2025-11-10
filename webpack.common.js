@@ -54,6 +54,3 @@ module.exports = {
 
   ],
 };
-export default {
-  base: '/Berbagi-Cerita-Apps/',
-}

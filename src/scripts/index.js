@@ -2,7 +2,7 @@ import App from './pages/app';
 import '../styles/styles.css';
 import { getActiveRoute } from './routes/url-parser';
 
-// DOM ready
+// ==== DOM Ready ====
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App({
     navigationDrawer: document.getElementById('navigation-drawer'),
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     content: document.getElementById('main-content'),
   });
 
-  // helper: update nav (Login -> Logout)
+  // ==== NAV LOGIN/LOGOUT ====
   function updateNav() {
     const navList = document.querySelector('.nav-list');
     if (!navList) return;
@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNav();
   app.renderPage();
 
+  // ==== Router transition ====
   window.addEventListener('hashchange', async () => {
     const main = document.getElementById('main-content');
     if (document.startViewTransition) {
@@ -70,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.addEventListener('auth:changed', () => updateNav());
-
   window.addEventListener('story:added', async () => {
     const activeRoute = getActiveRoute();
     if (activeRoute === '/') {
@@ -89,23 +89,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ==== PUSH NOTIFICATION SETUP ====
+// ==== PUSH NOTIFICATION & SERVICE WORKER ====
 async function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
 
   try {
-    const registration = await navigator.serviceWorker.register('./service-worker.js');
+    // 🔧 Fix path untuk GitHub Pages dan localhost
+    const basePath = window.location.hostname.includes('github.io')
+      ? '/Berbagi-Cerita-Apps'
+      : '';
+
+    const registration = await navigator.serviceWorker.register(`${basePath}/service-worker.js`);
     console.log('✅ Service Worker registered:', registration);
 
     const readyReg = await navigator.serviceWorker.ready;
     console.log('✅ Service Worker ready!');
 
+    // ==== Minta izin notifikasi ====
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
       console.warn('🚫 Izin notifikasi ditolak pengguna.');
-      return; // stop kalau user tolak izin
+      return;
     }
+
+    // ==== Subscribsi ke push ====
     await subscribeUserToPush(readyReg);
+
+    // 🔔 Tes notifikasi lokal
+    readyReg.showNotification('Tes Notifikasi!', {
+      body: 'Service Worker aktif dan notifikasi siap digunakan 🚀',
+      icon: `${basePath}/images/logo.png`,
+      badge: `${basePath}/images/favicon.png`,
+    });
   } catch (error) {
     console.error('❌ Service Worker registration failed:', error);
   }
@@ -134,7 +149,6 @@ async function subscribeUserToPush(registration) {
       return;
     }
 
-    // Kirim hanya data yang sesuai schema API
     const subscriptionObject = subscription.toJSON();
     const payload = {
       endpoint: subscriptionObject.endpoint,
@@ -172,6 +186,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
+// Jalankan register setelah window load
 window.addEventListener('load', async () => {
-  setTimeout(registerServiceWorker, 2000); // delay 2 detik agar SW benar-benar ready
+  setTimeout(registerServiceWorker, 2000);
 });

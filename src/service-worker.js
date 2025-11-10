@@ -52,39 +52,58 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// 🔔 Push Notification Handler (gabungan, versi final)
 self.addEventListener('push', (event) => {
-  let body = 'Ada notifikasi baru dari Berbagi Cerita!';
+  console.log('📩 Push event:', event);
+
+  let notificationData = {
+    title: 'Berbagi Cerita',
+    body: 'Ada notifikasi baru!',
+    icon: '/images/logo.png',
+  };
 
   if (event.data) {
     try {
       const data = event.data.json();
-      body = data.options?.body || body;
-    } catch {
-      body = event.data.text();
+      notificationData.title = data.title || 'Berbagi Cerita';
+      notificationData.body = data.options?.body || data.body || 'Ada notifikasi baru!';
+      notificationData.icon = data.options?.icon || '/images/logo.png';
+    } catch (e) {
+      notificationData.body = event.data.text();
     }
   }
 
   const options = {
-    body,
-    icon: '/images/logo.png',
+    body: notificationData.body,
+    icon: notificationData.icon,
     badge: '/images/favicon.png',
     vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1,
-    },
   };
 
   event.waitUntil(
-    self.registration.showNotification('Berbagi Cerita', options)
+    self.registration.showNotification(notificationData.title, options)
   );
 });
 
-// Klik notifikasi → buka halaman utama
+
+// Klik notifikasi → buka halaman utama atau fokus tab yang sudah ada
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil(clients.openWindow('./'));
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      // Kalau sudah ada tab app-nya, fokus ke situ aja
+      for (const client of clientList) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          return client.focus();
+        }
+      }
+
+      // Kalau belum ada, buka tab baru ke halaman utama app
+      if (clients.openWindow) {
+        return clients.openWindow(`${self.location.origin}/Berbagi-Cerita-Apps/`);
+      }
+    })
+  );
 });
 
 
